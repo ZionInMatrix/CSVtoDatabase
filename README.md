@@ -5,3 +5,4 @@
 ```
 $ git clone https://github.com/ZionInMatrix/CSVtoDatabase.git
 ```
+The code will allow us to read data from the CSV file and write it to the MySQL database, after which the data from the database will be displayed in the console and the file will be moved to another path.
