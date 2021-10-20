@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,39 +10,27 @@ import java.sql.*;
 import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
-    public static void main(String[] args) {
-        String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
-
-        writeDataAndFetchFromDatabase(filePath);
+    public static void main(String[] args) throws SQLException {
+        writeDataAndFetchFromDatabase();
+        fetchDataFromDatabase();
     }
 
     /**
      * The main method in which most of the functionality of the code will be executed
-     * NOTE: I need use refactoring for this method, but I hope it's ok in this time
-     *
-     * @param filePath path to read the file
      */
-    public static void writeDataAndFetchFromDatabase(String filePath) {
-
+    public static void writeDataAndFetchFromDatabase() {
         int batchSize = 20;
         String lineText = null;
         int count = 0;
 
         try {
             Connection connection = connectToDatabase();
-
-            Statement mystatement = connection.createStatement();
-
-            ResultSet codebase = mystatement.executeQuery("select * from employee");
-
             String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
-
             PreparedStatement statement = connection.prepareStatement(sql1);
-            BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
+            BufferedReader bufferedReader = readPath();
+            bufferedReader.readLine();
 
-            lineReader.readLine();
-
-            while ((lineText = lineReader.readLine()) != null) {
+            while ((lineText = bufferedReader.readLine()) != null) {
                 String[] data = lineText.split(",");
 
                 String ico = data[0];
@@ -66,32 +55,23 @@ public class CSVConsume {
                 }
             }
 
-            while (codebase.next()) {
-                System.out.println(codebase.getString("ico") + "  " + codebase.getString("nazevfirmy") +
-                        "  " + codebase.getString("adresfirmy") + " " + codebase.getString("email") + " "
-                        + codebase.getString("jmeno") + " " + codebase.getString("prijmeni") + " " + codebase.getString("datum"));
-
-            }
-
-            moveFile(filePath);
-
-            lineReader.close();
+            bufferedReader.close();
             statement.executeBatch();
             connection.commit();
             connection.close();
 
+            moveFileToAnotherPath();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
      * The method will transfer the file to another directory
-     *
-     * @param filePath accepted file directory
      */
-    public static void moveFile(String filePath) throws IOException {
+    public static void moveFileToAnotherPath() throws IOException {
+        String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
         Path temp = Files.move(Paths.get(filePath),
                 Paths.get("/Users/newlife/Desktop/CSVtoDatabase/src/main/data.csv"));
 
@@ -101,8 +81,7 @@ public class CSVConsume {
     /**
      * The method will connect to the database
      *
-     * @return
-     * @throws SQLException
+     * @throws SQLException if something goes wrong
      */
     public static Connection connectToDatabase() throws SQLException {
         String jdbcURL = "jdbc:mysql://localhost:3306/ems";
@@ -115,5 +94,41 @@ public class CSVConsume {
         connection.setAutoCommit(false);
 
         return connection;
+    }
+
+    /**
+     * the method will be read CSV file from filePath
+     *
+     * @return BufferedReader
+     * @throws FileNotFoundException if something goes wrong
+     */
+    public static BufferedReader readPath() throws FileNotFoundException {
+        String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
+        return new BufferedReader(new FileReader(filePath));
+    }
+
+    /**
+     * The method will be fetch data from database
+     *
+     * @throws SQLException if something goes wrong
+     */
+    public static void fetchDataFromDatabase() throws SQLException {
+        Connection connection = connectToDatabase();
+        Statement mystatement = connection.createStatement();
+
+        ResultSet codebase = mystatement.executeQuery("select * from employee");
+
+        while (codebase.next()) {
+            System.out.println(codebase.getString("ico")
+                    + " " + codebase.getString("nazevfirmy")
+                    + " " + codebase.getString("adresfirmy")
+                    + " " + codebase.getString("email")
+                    + " " + codebase.getString("jmeno")
+                    + " " + codebase.getString("prijmeni")
+                    + " " + codebase.getString("datum"));
+        }
+
+        connection.commit();
+        connection.close();
     }
 }
