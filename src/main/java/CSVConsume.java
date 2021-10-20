@@ -10,6 +10,8 @@ import java.sql.*;
 import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
+    static final String pathToCSV = System.getProperty("user.dir") + "src/main/resources/data.csv";
+
     public static void main(String[] args) throws SQLException {
         writeDataFromCSVToDatabase();
         fetchDataFromDatabase();
@@ -71,8 +73,7 @@ public class CSVConsume {
      * The method will transfer the file to another directory
      */
     public static void moveFileToAnotherPath() throws IOException {
-        String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
-        Path temp = Files.move(Paths.get(filePath),
+        Path temp = Files.move(Paths.get(pathToCSV),
                 Paths.get("/Users/newlife/Desktop/CSVtoDatabase/src/main/data.csv"));
 
         System.out.println("File moved successfully");
@@ -103,8 +104,7 @@ public class CSVConsume {
      * @throws FileNotFoundException if something goes wrong
      */
     public static BufferedReader readPath() throws FileNotFoundException {
-        String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
-        return new BufferedReader(new FileReader(filePath));
+        return new BufferedReader(new FileReader(pathToCSV));
     }
 
     /**
