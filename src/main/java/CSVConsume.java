@@ -11,14 +11,14 @@ import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
     public static void main(String[] args) throws SQLException {
-        writeDataAndFetchFromDatabase();
+        writeDataFromCSVToDatabase();
         fetchDataFromDatabase();
     }
 
     /**
      * The main method in which most of the functionality of the code will be executed
      */
-    public static void writeDataAndFetchFromDatabase() {
+    public static void writeDataFromCSVToDatabase() {
         int batchSize = 20;
         String lineText = null;
         int count = 0;
