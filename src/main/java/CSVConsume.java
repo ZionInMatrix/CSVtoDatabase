@@ -10,35 +10,29 @@ import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
     public static void main(String[] args) {
-        String jdbcURL = "jdbc:mysql://localhost:3306/ems";
-        String userName = "root";
-        String password = "yourpasswd";
         String filePath = "/Users/newlife/Desktop/CSVtoDatabase/src/main/resources/data.csv";
 
-        writeDataAndFetchFromDatabase(jdbcURL, userName, password, filePath);
+        writeDataAndFetchFromDatabase(filePath);
     }
 
     /**
      * The main method in which most of the functionality of the code will be executed
      * NOTE: I need use refactoring for this method, but I hope it's ok in this time
      *
-     * @param jdbcURL  the URL address of the database
-     * @param userName the name of the database
-     * @param password required password to access the database
      * @param filePath path to read the file
      */
-    public static void writeDataAndFetchFromDatabase(String jdbcURL, String userName, String password, String filePath) {
-        Connection connection = null;
+    public static void writeDataAndFetchFromDatabase(String filePath) {
+
         int batchSize = 20;
         String lineText = null;
         int count = 0;
 
         try {
-            connection = DriverManager.getConnection(jdbcURL, userName, password);
-            connection.setAutoCommit(false);
+            Connection connection = connectToDatabase();
 
             Statement mystatement = connection.createStatement();
-            ResultSet codespeedy = mystatement.executeQuery("select * from employee");
+
+            ResultSet codebase = mystatement.executeQuery("select * from employee");
 
             String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
 
@@ -71,10 +65,11 @@ public class CSVConsume {
                     statement.executeBatch();
                 }
             }
-            while (codespeedy.next()) {
-                System.out.println(codespeedy.getString("ico") + "  " + codespeedy.getString("nazevfirmy") +
-                        "  " + codespeedy.getString("adresfirmy") + " " + codespeedy.getString("email") + " "
-                        + codespeedy.getString("jmeno") + " " + codespeedy.getString("prijmeni") + " " + codespeedy.getString("datum"));
+
+            while (codebase.next()) {
+                System.out.println(codebase.getString("ico") + "  " + codebase.getString("nazevfirmy") +
+                        "  " + codebase.getString("adresfirmy") + " " + codebase.getString("email") + " "
+                        + codebase.getString("jmeno") + " " + codebase.getString("prijmeni") + " " + codebase.getString("datum"));
 
             }
 
@@ -101,5 +96,24 @@ public class CSVConsume {
                 Paths.get("/Users/newlife/Desktop/CSVtoDatabase/src/main/data.csv"));
 
         System.out.println("File moved successfully");
+    }
+
+    /**
+     * The method will connect to the database
+     *
+     * @return
+     * @throws SQLException
+     */
+    public static Connection connectToDatabase() throws SQLException {
+        String jdbcURL = "jdbc:mysql://localhost:3306/ems";
+        String userName = "root";
+        String password = "yourpasswd";
+
+        Connection connection = null;
+
+        connection = DriverManager.getConnection(jdbcURL, userName, password);
+        connection.setAutoCommit(false);
+
+        return connection;
     }
 }
