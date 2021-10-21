@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
-
 public class CSVConsume {
     static final String pathToCSV = System.getProperty("user.dir") + "/src/main/resources/data.csv";
 
@@ -60,7 +59,6 @@ public class CSVConsume {
             connection.close();
 
             moveFileToAnotherPath();
-
             fetchDataFromDatabase();
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +70,7 @@ public class CSVConsume {
      */
     public static void moveFileToAnotherPath() throws IOException {
         Path temp = Files.move(Paths.get(pathToCSV),
-                Paths.get("/Users/newlife/Desktop/CSVtoDatabase/src/main/data.csv"));
+                Paths.get(pathToCSV));
 
         System.out.println("File moved successfully");
     }
