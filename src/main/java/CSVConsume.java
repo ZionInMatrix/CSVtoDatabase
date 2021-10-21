@@ -47,7 +47,7 @@ public class CSVConsume {
             connection.commit();
             connection.close();
 
-            fetchDataFromDatabase();
+            actualDataFromDatabase();
             moveFileToAnotherPath();
 
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class CSVConsume {
      *
      * @throws SQLException if something goes wrong
      */
-    public static void fetchDataFromDatabase() throws SQLException {
+    public static void actualDataFromDatabase() throws SQLException {
         Connection connection = connectToDatabase();
         Statement mystatement = connection.createStatement();
 
