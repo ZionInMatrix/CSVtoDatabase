@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +27,7 @@ public class CSVConsume {
             Connection connection = connectToDatabase();
             String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql1);
-            BufferedReader bufferedReader = readPath();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToCSV));
             bufferedReader.readLine();
 
             while ((lineText = bufferedReader.readLine()) != null) {
@@ -95,16 +94,6 @@ public class CSVConsume {
         connection.setAutoCommit(false);
 
         return connection;
-    }
-
-    /**
-     * the method will be read CSV file from filePath
-     *
-     * @return BufferedReader
-     * @throws FileNotFoundException if something goes wrong
-     */
-    public static BufferedReader readPath() throws FileNotFoundException {
-        return new BufferedReader(new FileReader(pathToCSV));
     }
 
     /**
