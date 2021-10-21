@@ -18,6 +18,8 @@ public class CSVConsume {
      */
     public static void writeDataFromCSVToDatabase() {
         int batchSize = 20;
+        String lineText;
+        int count = 0;
 
         try {
             Connection connection = connectToDatabase();
@@ -25,8 +27,6 @@ public class CSVConsume {
             PreparedStatement statement = connection.prepareStatement(sql1);
             BufferedReader lineReader = new BufferedReader(new FileReader(pathToCSV));
 
-            String lineText = null;
-            int count = 0;
             lineReader.readLine();
 
             while ((lineText = lineReader.readLine()) != null) {
@@ -54,7 +54,6 @@ public class CSVConsume {
             System.out.println(e);
         }
     }
-
 
     /**
      * The method will transfer the file to another directory
