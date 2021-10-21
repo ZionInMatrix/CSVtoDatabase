@@ -12,9 +12,8 @@ import static java.lang.Integer.parseInt;
 public class CSVConsume {
     static final String pathToCSV = System.getProperty("user.dir") + "/src/main/resources/data.csv";
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         writeDataFromCSVToDatabase();
-        fetchDataFromDatabase();
     }
 
     /**
@@ -64,6 +63,7 @@ public class CSVConsume {
 
             moveFileToAnotherPath();
 
+            fetchDataFromDatabase();
         } catch (Exception e) {
             e.printStackTrace();
         }
