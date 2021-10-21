@@ -19,10 +19,10 @@ String userName = "root";
 String password = "yourpasswd";
 ```
 
-### 5. The CSV file with which you will work is located, the file filled with sample data.
+### 5. The CSV file with which you will work is located "src/main/resources/data.csv", the file already filled with sample data.
 
 ```
 static final String pathToCSV = System.getProperty("user.dir") + "src/main/resources/data.csv";
 ```
-
+### 6. When the data is transferred to the database, the file will be moved to the specified path
 
