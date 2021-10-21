@@ -10,7 +10,7 @@ import java.sql.*;
 import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
-    static final String pathToCSV = System.getProperty("user.dir") + "src/main/resources/data.csv";
+    static final String pathToCSV = System.getProperty("user.dir") + "/src/main/resources/data.csv";
 
     public static void main(String[] args) throws SQLException {
         writeDataFromCSVToDatabase();
