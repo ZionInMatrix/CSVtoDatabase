@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
-import static java.lang.Integer.parseInt;
 
 public class CSVConsume {
     static final String pathToCSV = System.getProperty("user.dir") + "/src/main/resources/data.csv";
@@ -41,7 +40,7 @@ public class CSVConsume {
                 String prijmeni = data[5];
                 String datum = data[6];
 
-                statement.setInt(1, parseInt(ico));
+                statement.setString(1, ico);
                 statement.setString(2, nazevFirmy);
                 statement.setString(3, adresFirmy);
                 statement.setString(4, email);
