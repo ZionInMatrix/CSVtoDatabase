@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.sql.*;
 
 public class CSVConsume {
-    static final String pathToCSV = System.getProperty("user.dir") + "/src/main/resources/data.csv";
+    static final String pathToCSV = System.getProperty("user.dir") + "/data.csv";
 
     public static void main(String[] args) {
         writeDataFromCSVToDatabase();
@@ -94,7 +94,7 @@ public class CSVConsume {
     }
 
     /**
-     * The method will be fetch data from database
+     * The method will be fetch data from database for showing changes
      *
      * @throws SQLException if something goes wrong
      */
