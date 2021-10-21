@@ -32,22 +32,9 @@ public class CSVConsume {
             while ((lineText = lineReader.readLine()) != null) {
                 String[] data = lineText.split(",");
 
-                String ico = data[0];
-                String nazevfirmy = data[1];
-                String adresfirmy = data[2];
-                String email = data[3];
-                String jmeno = data[4];
-                String prijmeni = data[5];
-                String datum = data[6];
-
-                statement.setString(1, ico);
-                statement.setString(2, nazevfirmy);
-                statement.setString(3, adresfirmy);
-                statement.setString(4, email);
-                statement.setString(5, jmeno);
-                statement.setString(6, prijmeni);
-                statement.setString(7, datum);
-                statement.addBatch();
+                for (int i = 0; i < data.length; i++) {
+                    statement.setString(i+1,data[i]);
+                }
 
                 if (count % batchSize == 0) {
                     statement.executeBatch();
