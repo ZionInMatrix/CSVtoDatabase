@@ -10,13 +10,18 @@ The code will allow us to read data from the CSV file and write it to the MySQL 
 ### 2. Import project into Intellij IDEA Ultimate.
 
 ### 3. Please create an ems database in MySQL or of your choice, plus an employee table with fields: 
-ico: varchar(45), NULL, UQ 
-nazevfirmy: varchar(45), NN 
-adresfirmy: varchar(45), NN
-email: varchar(45), NULL, UQ
-jmeno: varchar(45), NN 
-prijmeni: varchar(45), NN
-datum: varchar(45), NN
+
+CREATE TABLE `employee` (
+  `ico` int NOT NULL,
+  `nazevfirmy` varchar(45) COLLATE utf8_bin NOT NULL,
+  `adresfirmy` varchar(45) COLLATE utf8_bin NOT NULL,
+  `email` varchar(45) COLLATE utf8_bin NOT NULL,
+  `jmeno` varchar(45) COLLATE utf8_bin NOT NULL,
+  `prijmeni` varchar(45) COLLATE utf8_bin NOT NULL,
+  `datum` varchar(45) COLLATE utf8_bin NOT NULL,
+  UNIQUE KEY `ico_UNIQUE` (`ico`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 
 ### 4. Update MySQL connection configurations into connectToDatabase and put in to it current settings.
 
