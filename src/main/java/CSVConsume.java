@@ -33,8 +33,9 @@ public class CSVConsume {
                 String[] data = lineText.split(",");
 
                 for (int i = 0; i < data.length; i++) {
-                    statement.setString(i+1,data[i]);
+                    statement.setString(i + 1, data[i]);
                 }
+                statement.addBatch();
 
                 if (count % batchSize == 0) {
                     statement.executeBatch();
@@ -48,6 +49,7 @@ public class CSVConsume {
 
             fetchDataFromDatabase();
             moveFileToAnotherPath();
+
         } catch (Exception e) {
             System.out.println(e);
         }
