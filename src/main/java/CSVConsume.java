@@ -18,40 +18,55 @@ public class CSVConsume {
      */
     public static void writeDataFromCSVToDatabase() {
         int batchSize = 20;
-        String lineText = null;
-        int count = 0;
 
         try {
             Connection connection = connectToDatabase();
             String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql1);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToCSV));
-            bufferedReader.readLine();
+            BufferedReader lineReader = new BufferedReader(new FileReader(pathToCSV));
 
-            while ((lineText = bufferedReader.readLine()) != null) {
+            String lineText = null;
+            int count = 0;
+            lineReader.readLine();
+
+            while ((lineText = lineReader.readLine()) != null) {
                 String[] data = lineText.split(",");
 
-                for (int i = 0; i < data.length; i++) {
-                    statement.setString(i+1,data[i]);
-                }
+                String ico = data[0];
+                String nazevfirmy = data[1];
+                String adresfirmy=data[2];
+                String email=data[3];
+                String jmeno=data[4];
+                String prijmeni=data[5];
+                String datum=data[6];
+
+                statement.setString(1,ico);
+                statement.setString(2,nazevfirmy);
+                statement.setString(3,adresfirmy);
+                statement.setString(4,email);
+                statement.setString(5,jmeno);
+                statement.setString(6,prijmeni);
+                statement.setString(7,datum);
+                statement.addBatch();
 
                 if (count % batchSize == 0) {
                     statement.executeBatch();
                 }
             }
 
-            bufferedReader.close();
+            lineReader.close();
             statement.executeBatch();
             connection.commit();
             connection.close();
 
-            moveFileToAnotherPath();
             fetchDataFromDatabase();
-
+            moveFileToAnotherPath();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
+
 
     /**
      * The method will transfer the file to another directory
