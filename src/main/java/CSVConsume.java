@@ -23,7 +23,8 @@ public class CSVConsume {
 
         try {
             Connection connection = connectToDatabase();
-            String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
+            String sql1 = "insert ignore into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)"
+                    + "ON DUPLICATE KEY UPDATE "+ "ico=VALUES(ico)," + "email=VALUES(email)";
             PreparedStatement statement = connection.prepareStatement(sql1);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToCSV));
             bufferedReader.readLine();
@@ -60,8 +61,9 @@ public class CSVConsume {
 
             moveFileToAnotherPath();
             fetchDataFromDatabase();
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
