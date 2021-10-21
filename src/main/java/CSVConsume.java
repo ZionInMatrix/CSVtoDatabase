@@ -23,8 +23,7 @@ public class CSVConsume {
 
         try {
             Connection connection = connectToDatabase();
-            String sql1 = "insert ignore into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)"
-                    + "ON DUPLICATE KEY UPDATE "+ "ico=VALUES(ico)," + "email=VALUES(email)";
+            String sql1 = "insert into employee(ico, nazevfirmy, adresfirmy, email, jmeno, prijmeni, datum) values (?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql1);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToCSV));
             bufferedReader.readLine();
