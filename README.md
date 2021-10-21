@@ -1,4 +1,4 @@
-# Java MySQL manipulation with CSV file
+# Java JDBC MySQL manipulation with CSV file
 
 ### 1 You can clone it from GitHub by running following command.
 
