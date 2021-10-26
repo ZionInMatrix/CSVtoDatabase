@@ -1,4 +1,4 @@
-# Java MySQL manipulation with CSV file
+# Java JDBC MySQL manipulation with CSV file
 
 ### 1 You can clone it from GitHub by running following command.
 
@@ -31,5 +31,9 @@ String userName = "root";
 String password = "yourpasswd";
 ```
 
-### 5. When the data is transferred to the database, the file will be moved to the specified path
+### 5. When the data is transferred to the database, the file will be moved to the specified path of your choice you can correc setting it:
+
+```
+static final String pathToCSV = System.getProperty("user.dir") + "/data.csv"
+```
 
