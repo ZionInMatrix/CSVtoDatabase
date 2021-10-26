@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class CSVConsume {
     static final String pathToCSV = System.getProperty("user.dir") + "/data.csv";
+    static final String pathToMoveCSV = System.getProperty("user.dir") + "/src/main/data.csv";
 
     public static void main(String[] args) {
         writeDataFromCSVToDatabase();
@@ -60,7 +61,7 @@ public class CSVConsume {
      */
     public static void moveFileToAnotherPath() throws IOException {
         Path temp = Files.move(Paths.get(pathToCSV),
-                Paths.get(pathToCSV));
+                Paths.get(pathToMoveCSV));
 
         System.out.println("File moved successfully");
     }
@@ -104,7 +105,6 @@ public class CSVConsume {
                     + " " + codebase.getString("datum"));
         }
 
-        connection.commit();
         connection.close();
     }
 }
