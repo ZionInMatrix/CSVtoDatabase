@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
+import static java.lang.Integer.parseInt;
+
 public class CSVConsume {
     static final String pathToCSV = System.getProperty("user.dir") + "/data.csv";
     static final String pathToMoveCSV = System.getProperty("user.dir") + "/src/main/data.csv";
@@ -33,10 +35,24 @@ public class CSVConsume {
             while ((lineText = lineReader.readLine()) != null) {
                 String[] data = lineText.split(",");
 
-                for (int i = 0; i < data.length; i++) {
-                    statement.setString(i + 1, data[i]);
-                }
+                String ico = data[0];
+                String nazevfirmy = data[1];
+                String adresfirmy = data[2];
+                String email = data[3];
+                String jmeno = data[4];
+                String prijmeni = data[5];
+                String datum = data[6];
+
+                statement.setInt(1, parseInt(ico));
+                statement.setString(2, nazevfirmy);
+                statement.setString(3, adresfirmy);
+                statement.setString(4, email);
+                statement.setString(5, jmeno);
+                statement.setString(6, prijmeni);
+                statement.setString(7, datum);
+
                 statement.addBatch();
+
 
                 if (count % batchSize == 0) {
                     statement.executeBatch();
