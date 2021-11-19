@@ -79,7 +79,7 @@ public class CSVConsume {
         Path temp = Files.move(Paths.get(pathToCSV),
                 Paths.get(pathToMoveCSV));
 
-        System.out.println("The file was moved to the path : " + temp + "\n" + "Status: " + "File moved successfully");
+        System.out.println("The file was moved to the path: " + temp + "\n" + "Status: " + "File moved successfully");
     }
 
     /**
